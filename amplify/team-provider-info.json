@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-pollmaker-dev-205641-authRole",
+      "UnauthRoleArn": "arn:aws:iam::890078463828:role/amplify-pollmaker-dev-205641-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::890078463828:role/amplify-pollmaker-dev-205641-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-pollmaker-dev-205641-deployment",
+      "UnauthRoleName": "amplify-pollmaker-dev-205641-unauthRole",
+      "StackName": "amplify-pollmaker-dev-205641",
+      "StackId": "arn:aws:cloudformation:us-east-1:890078463828:stack/amplify-pollmaker-dev-205641/aa7f1bb0-a1a7-11ec-9c03-1295a08eae49",
+      "AmplifyAppId": "d3a029drmi0432"
+    }
+  }
+}

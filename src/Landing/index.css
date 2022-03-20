@@ -1,0 +1,14 @@
+.slider-enter {
+    flex-grow: 0;
+  }
+  .slider-enter-active {
+    flex-grow: 1;
+    transition: flex-grow 500ms ease-in;
+  }
+  .slider-exit {
+    flex-grow: 1;
+  }
+  .slider-exit-active {
+    flex-grow: 0;
+    transition: flex-grow 500ms ease-in;
+  }

@@ -1,0 +1,10 @@
+type Poll @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  title: String!
+  options: AWSJSON!
+  active: Boolean!
+  custom: Boolean
+  start_date: AWSDate
+  end_date: AWSDate
+}
+ 

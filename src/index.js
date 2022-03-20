@@ -1,12 +1,31 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import Landing from './Landing';
+import PollMain from './PollMain';
+import './index.scss';
+
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+} from "react-router-dom";
+
 import reportWebVitals from './reportWebVitals';
+
+import Amplify from "aws-amplify";
+import awsExports from "./aws-exports";
+Amplify.configure(awsExports);
+
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Landing/> } />
+          <Route path="/preview/:pollId" element={<PollMain/> } />
+          <Route path="/poll/:pollId" element={<PollMain/> } />
+        </Routes>
+      </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );
