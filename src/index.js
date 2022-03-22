@@ -14,6 +14,8 @@ import reportWebVitals from './reportWebVitals';
 
 import Amplify from "aws-amplify";
 import awsExports from "./aws-exports";
+import Dashboard from './Dashboard';
+import EditPoll from './EditPoll';
 Amplify.configure(awsExports);
 
 
@@ -22,6 +24,8 @@ ReactDOM.render(
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Landing/> } />
+          <Route path="/dashboard/edit/:pollId" element={<EditPoll/> } />
+          <Route path="/dashboard/*" element={<Dashboard/> } />
           <Route path="/preview/:pollId" element={<PollMain/> } />
           <Route path="/poll/:pollId" element={<PollMain/> } />
         </Routes>

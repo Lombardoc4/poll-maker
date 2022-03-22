@@ -10,7 +10,7 @@ const UserPoll = ({poll, selectState}) => {
         setSelected(val);
     }
     return (
-        <div className="py-4 ps-3">
+        <div className="py-4">
             {Object.keys(poll.options).map(o => (
                 <Button onClick={() => handleClick(o)}
                 key={o}

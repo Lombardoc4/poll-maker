@@ -6,8 +6,11 @@ import { DataStore } from '@aws-amplify/datastore';
 import { Poll } from '../models';
 import { useNavigate } from "react-router-dom";
 import NavLayout from "./NavLayout";
+import useMobile from "../utils/isMobile";
 
 const CustomNav = ({ color = 'white'}) => {
+  const isMobile = useMobile();
+  const headerFS = isMobile ? 'display-1' : 'fs-1'
   const [loading, setLoading] = useState(false);
   const navigator = useNavigate();
 
@@ -56,22 +59,21 @@ const CustomNav = ({ color = 'white'}) => {
 
 
   return (
-    <NavLayout color={color}>
-      <Nav className='h-100 px-3'>
-        <h1 className='display-1 mt-3'>Poll<br/>Maker</h1>
-        <div className='my-auto d-flex flex-column'>
+    <NavLayout color={color} isMobile={isMobile}>
+      <Nav className='h-100 p-3 d-flex flex-column flex-md-row align-items-center col-md-12'>
+        <h1 className={'me-auto mt-3 my-md-0 ' + headerFS}>Poll <br className="d-md-none"/>Maker</h1>
+        <div className='order-md-3 my-auto d-flex flex-column flex-md-row col-12 col-md-3'>
             <Button className="m-2 shadow" variant="success">Log&nbsp;In</Button>
             <Button className="m-2 shadow" variant={createVariant}>Create Account</Button>
         </div>
-        <h2 className='fs-4  mb-1 '>Edit Existing Poll</h2>
-        <form onSubmit={submitSearch} className="mb-2 d-flex align-items-center border-0 border-bottom ">
-            <input ref={inputEl} className={"me-1 font-monospace border-0 bg-transparent outline-0 w-75 text-truncate " + textColor}
-            placeholder='Poll Code' type="text"/>
-            {searchButton}
-        </form>
-        <div className='d-none d-md-flex my-auto mx-2 fs-4 align-items-center'>
-            <i className="me-2 fs-1 bi bi-arrow-left"></i>
-            <p className='mb-0'>Start</p>
+        <div className="order-md-2 ms-md-auto me-md-2">
+
+          <p className='fs-5 mb-1 mb-md-0'>Edit Existing Poll</p>
+          <form onSubmit={submitSearch} className="mb-2 mb-md-0 d-flex align-items-center border-0 border-bottom ">
+              <input ref={inputEl} className={"me-1 font-monospace border-0 bg-transparent outline-0 w-75 text-truncate " + textColor}
+              placeholder='Poll Code' type="text"/>
+              {searchButton}
+          </form>
         </div>
       </Nav>
     </NavLayout>

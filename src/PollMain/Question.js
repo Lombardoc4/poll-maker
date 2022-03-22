@@ -33,7 +33,7 @@ const Question = ({data, scrollToEl, submit, children}) => {
     const opacity = optionsViewed === 'animate' ? 'opacity-0' : 'opacity-100';
     const height = optionsViewed === 'animate' ? '0' : '150px';
     return (<>
-        <div className="ps-3 d-flex align-items-center flex-wrap">
+        <div className="d-flex align-items-center flex-wrap">
             <h1 className="display-3 py-5 w-100">{data.title}</h1>
 
             {optionsViewed !== 'hide' &&

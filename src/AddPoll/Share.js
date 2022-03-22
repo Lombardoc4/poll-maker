@@ -4,7 +4,7 @@ import CopyInput from "../components/CopyInput";
 
 const Share = ({onBack, data}) => {
 
-    const pollCode = data.code || 'loading';
+    const pollCode = data.editCode || 'loading';
     const shareURL = 'https://localhost:3000/poll/' + data.shareId;
     const previewURL = '/preview/' + pollCode;
 

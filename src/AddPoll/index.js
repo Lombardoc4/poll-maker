@@ -3,24 +3,27 @@ import DatePicker from "./DatePicker";
 import InitForm from "./InitForm";
 import Settings from "./Settings";
 import Share from "./Share";
-
 import { DataStore } from '@aws-amplify/datastore';
 import { Poll } from '../models';
 
 import getIp from '../utils/getIp';
+import useMobile from "../utils/isMobile";
+import { Container } from "react-bootstrap";
+import Preloader from "../components/Preloader";
 
-const AddSurvey = ({cancel, children}) => {
+const AddSurvey = ({cancel, children, user}) => {
     const [loading, setLoading] = useState(true);
     const [savedPoll, setSaved] = useState(false);
     const [view, setView] = useState('init');
     const [pollData, setPollData] = useState({});
+    const isMobile = useMobile();
 
     useEffect(() => {
         setLoading(false);
     }, [])
 
-    const bgStyles = loading ? 'bg-primary w-0' : 'bg-white w-100';
-    const displayStyles = loading ? 'opacity-0' : 'opacity-100';
+    const bgStyles = (loading && isMobile) ? 'bg-primary w-0' : 'bg-white w-100';
+    const displayStyles = (loading && isMobile) ? 'opacity-0' : 'opacity-100';
 
 
     const onBack = (newView) => {
@@ -77,21 +80,24 @@ const AddSurvey = ({cancel, children}) => {
 
 
     return (
-        <div className='d-flex position-relative bg-gradient bg-primary'>
+        <div className='position-relative bg-gradient bg-primary'>
+            {children}
             <div className={'d-flex align-items-center pb-5 ' + bgStyles}
             style={{
-                minHeight: window.innerHeight,
+                minHeight: isMobile ? window.innerHeight : 'auto',
                 transition: 'background-color 0.6s, width 0.6s'
             }}>
-                <div className={"px-3 pt-5 pb-2 w-80 " + displayStyles} style={{transition: 'opacity 0.6s 0.6s'}}>
+            <Container fluid="md">
+
+                <div className={"px-3 pt-5 pb-2 w-80 w-md-100 " + displayStyles} style={{transition: 'opacity 0.6s 0.6s'}}>
                     {view === 'init' && <InitForm cancel={cancel} submitForm={submitForm} data={{title: pollData.title, options: pollData.options}}/>}
                     {view === 'settings' && <Settings onBack={onBack} submit={submitForm} data={{dates: pollData.dates, custom: pollData.custom}}/> }
                     {view === 'dates' && <DatePicker onBack={onBack} submit={submitForm} data={pollData.dates}/> }
                     {view === 'preview' && <Share onBack={onBack} data={savedPoll}/>}
                 </div>
+            </Container>
             </div>
-
-            {children}
+            {!isMobile && <Preloader loading={loading}/>}
         </div>
     )
 }

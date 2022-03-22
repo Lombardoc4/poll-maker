@@ -50,7 +50,7 @@ const InitForm = ({cancel, submitForm}) => {
     }
 
     return (
-        <form onSubmit={handleSubmit} className="w-75">
+        <form onSubmit={handleSubmit} className="w-75 w-md-33 mx-md-auto">
             <h1 className="opacity-0 user-select-none">Your Question</h1>
             <label className="h1 mb-0" htmlFor="Question">Your Question</label>
             <textarea

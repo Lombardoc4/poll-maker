@@ -1,16 +1,12 @@
-import { useParams } from "react-router-dom";
-import { DataStore } from '@aws-amplify/datastore';
-import { Poll } from '../models';
 import { useEffect, useRef, useState } from "react";
-import Spinner from "react-bootstrap/Spinner";
+import { useParams } from "react-router-dom";
 import CustomNav from "../Nav/CustomNav";
-import UserPoll from "./UserPoll";
-import useOnScreen from "../utils/isVisible";
-import { Button } from "react-bootstrap";
-import { selectClasses } from "@mui/material";
 import Question from "./Question";
 import Preloader from "../components/Preloader";
-
+import Button from "react-bootstrap/Button";
+import { DataStore } from '@aws-amplify/datastore';
+import { Poll } from '../models';
+import Results from "./Results";
 
 
 
@@ -23,6 +19,7 @@ const PollMain = () => {
     const { pollId } = useParams();
     const scrollBottomEl = useRef();
 
+    // TODO set & get cookie with ip to prevent submits
 
     useEffect(() => {
         const getPoll = async () => {
@@ -39,25 +36,11 @@ const PollMain = () => {
 
     }, [])
 
-    // useEffect(() => {
-    //     if (!loading && isVisible && optionsViewed === 'init') {
-    //         hideHint();
-    //     }
-    // }, [isVisible])
-
-    // const hideHint = () => {
-    //     setViewed('animate');
-
-    //     setTimeout(() => {
-    //         setViewed('hide')
-    //     }, 1000)
-    // }
-
     const handleSubmit = async (selected) => {
 
         const vote = await DataStore.save(
             Poll.copyOf(data, updated => {
-                updated.options[selected] = data.options[selected] + 1;
+                updated.options[selected] = parseInt(data.options[selected]) + 1;
             })
         );
 
@@ -69,9 +52,9 @@ const PollMain = () => {
 
 
     return (<>
-        <div className="position-relative w-80 pt-3" style={{minHeight: window.innerHeight}}>
+        <div className="position-relative w-80 w-sm-50 pt-3 ps-4" style={{minHeight: window.innerHeight}}>
 
-            {results && <h1 className="display-3">Standing Results</h1>}
+            {results && <Results data={data}/>}
             { (data.id && !results) &&
             <Question data={data} scrollToEl={scrollBottomEl} submit={handleSubmit}>
                 <Button
