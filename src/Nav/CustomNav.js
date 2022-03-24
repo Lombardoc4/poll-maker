@@ -4,7 +4,7 @@ import Nav from 'react-bootstrap/Nav';
 import Spinner from "react-bootstrap/Spinner";
 import { DataStore } from '@aws-amplify/datastore';
 import { Poll } from '../models';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import NavLayout from "./NavLayout";
 import useMobile from "../utils/isMobile";
 
@@ -32,7 +32,7 @@ const CustomNav = ({ color = 'white'}) => {
 
   useEffect(() => {
     const getPoll = async () => {
-      const models = await DataStore.query(Poll, p => p.editCode("eq", loading));
+      const models = await DataStore.query(Poll, p => p.edit_code("eq", loading));
       return models;
     }
 
@@ -61,7 +61,11 @@ const CustomNav = ({ color = 'white'}) => {
   return (
     <NavLayout color={color} isMobile={isMobile}>
       <Nav className='h-100 p-3 d-flex flex-column flex-md-row align-items-center col-md-12'>
-        <h1 className={'me-auto mt-3 my-md-0 ' + headerFS}>Poll <br className="d-md-none"/>Maker</h1>
+        <h1 className={'me-auto mt-3 my-md-0 ' + headerFS}>
+          <Link to="/" className="text-reset  text-decoration-none">
+            Poll <br className="d-md-none"/>Maker
+          </Link>
+        </h1>
         <div className='order-md-3 my-auto d-flex flex-column flex-md-row col-12 col-md-3'>
             <Button className="m-2 shadow" variant="success">Log&nbsp;In</Button>
             <Button className="m-2 shadow" variant={createVariant}>Create Account</Button>

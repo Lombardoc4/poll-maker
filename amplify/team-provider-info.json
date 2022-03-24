@@ -10,6 +10,22 @@
       "StackName": "amplify-pollmaker-dev-205641",
       "StackId": "arn:aws:cloudformation:us-east-1:890078463828:stack/amplify-pollmaker-dev-205641/aa7f1bb0-a1a7-11ec-9c03-1295a08eae49",
       "AmplifyAppId": "d3a029drmi0432"
+    },
+    "categories": {
+      "function": {
+        "AdminQueriesacaa5ae8": {
+          "deploymentBucketName": "amplify-pollmaker-dev-205641-deployment",
+          "s3Key": "amplify-builds/AdminQueriesacaa5ae8-435053446a44366d7849-build.zip"
+        },
+        "AdminQueries2fc277fb": {
+          "deploymentBucketName": "amplify-pollmaker-dev-205641-deployment",
+          "s3Key": "amplify-builds/AdminQueries2fc277fb-435053446a44366d7849-build.zip"
+        }
+      },
+      "auth": {
+        "authpollmaker": {},
+        "userPoolGroups": {}
+      }
     }
   }
 }

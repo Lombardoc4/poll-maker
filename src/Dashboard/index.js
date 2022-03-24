@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import { Link, useNavigate } from "react-router-dom";
 import AddSurvey from "../AddPoll";
 import DashboardNav from "../Nav/DashboardNav";
 import useMobile from "../utils/isMobile";
+import { Auth } from 'aws-amplify';
 
 const BorderRow = ({poll}) => {
     return (
@@ -69,12 +70,29 @@ const segments = ['Completed', 'Ongoing', 'Upcoming'];
 const segmentLimit = 3;
 
 const Dashboard = () => {
+    const [user, setUser] = useState({});
     const [view, setView] = useState('home');
     const navigator = useNavigate();
 
-    const user = {
-        name: 'Cris'
-    }
+    useEffect(() => {
+        Auth.currentAuthenticatedUser({
+            bypassCache: false  // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
+        }).then(user => setUser(user.attributes))
+        .catch(err => console.log(err));
+        
+    }, [])
+    
+    useEffect(() => {
+        if (user.name) {
+            
+        }
+    }, [user])
+    
+
+    
+    // const user = {
+    //     name: 'Cris'
+    // }
 
     const data = [
         {   title: 'Poll 1',
@@ -129,10 +147,11 @@ const Dashboard = () => {
     // Todo Check User is Logged in
 
     // Todo Fetch User Polls
-
+    console.log('render');
+    
     if (view === 'add') {
         return (
-            <AddSurvey cancel={() => {navigator('/dashboard');setView('home')}} user={user}>
+            <AddSurvey cancel={() => {navigator('/dashboard');setView('home')}} user={user.name}>
                 <DashboardNav color="primary"/>
             </AddSurvey>
         )
@@ -141,7 +160,7 @@ const Dashboard = () => {
     <div className="position-relative col-9 w-md-100 ms-3 me-0 ms-sm-5 mx-md-auto py-3 py-md-0"
     style={{minHeight: window.innerHeight}}>
         <DashboardNav color="primary"/>
-        <Container fluid='md'>
+        <Container fluid='md' className="pt-md-5">
 
             <p className="display-3">Welcome {user.name}</p>
             <div className="d-flex">

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button"
+import useMobile from "../utils/isMobile";
 import useOnScreen from "../utils/isVisible";
 import UserPoll from "./UserPoll";
 
@@ -8,11 +9,13 @@ const Question = ({data, scrollToEl, submit, children}) => {
     const [selected, setSelected] = useState('')
     const [optionsViewed, setViewed] = useState('init');
 
+    const isMobile = useMobile();
     const isVisible = useOnScreen(scrollToEl);
 
-    console.log(isVisible);
+    console.log('data', data);
+    
     useEffect(() => {
-        if (isVisible && optionsViewed === 'init') {
+        if (isVisible && optionsViewed === 'init' && isMobile) {
             hideHint();
         }
     }, [isVisible])
@@ -36,7 +39,7 @@ const Question = ({data, scrollToEl, submit, children}) => {
         <div className="d-flex align-items-center flex-wrap">
             <h1 className="display-3 py-5 w-100">{data.title}</h1>
 
-            {optionsViewed !== 'hide' &&
+            {(optionsViewed !== 'hide' && isMobile) &&
             <div
             onClick={() => {hideHint()}}
             className={"d-flex flex-column justify-content-center w-100 text-center overflow-hidden " + opacity}

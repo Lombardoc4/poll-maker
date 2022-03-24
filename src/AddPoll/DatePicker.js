@@ -60,10 +60,10 @@ const DatePicker = ({onBack, submit, data}) => {
           onDayClick={dayClick}
           numberOfMonths='2'
         />
-        <Button variant="success" onClick={()=> submit('settings', {dates: dates})} className="position-fixed bottom-0 start-50 translate-middle-x mb-3 shadow">
+        <Button variant="success" onClick={()=> submit('settings', {dates: dates})} className="position-absolute bottom-0 end-0 mb-3 shadow">
                 <svg className="" xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25"><line x2="20.42" y2="12.5" x1="2.5" y1="12.5" fill="none" stroke="#fff" strokeLinecap="round" strokeMiterlimit="10" strokeWidth="4"/><line x2="22.5" y2="12.5" x1="16.26" y1="7.7" fill="none" stroke="#fff" strokeLinecap="round" strokeMiterlimit="10" strokeWidth="4"/><line x2="22.5" y2="12.5" x1="16.26" y1="17.3" fill="none" stroke="#fff" strokeLinecap="round" strokeMiterlimit="10" strokeWidth="4"/></svg>
         </Button>
-        <Button onClick={() => onBack('settings')} className="position-fixed bottom-0 start-0 ms-3 mb-3 shadow">
+        <Button onClick={() => onBack('settings')} className="position-absolute bottom-0 start-0 mb-3 shadow">
                     <svg className="rotate-180" xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25"><line x1="4.58" y1="12.5" x2="22.5" y2="12.5" fill="none" stroke="#fff" strokeLinecap="round" strokeMiterlimit="10" strokeWidth="4"/><line x1="2.5" y1="12.5" x2="8.74" y2="7.7" fill="none" stroke="#fff" strokeLinecap="round" strokeMiterlimit="10" strokeWidth="4"/><line x1="2.5" y1="12.5" x2="8.74" y2="17.3" fill="none" stroke="#fff" strokeLinecap="round" strokeMiterlimit="10" strokeWidth="4"/></svg>
         </Button>
         </>

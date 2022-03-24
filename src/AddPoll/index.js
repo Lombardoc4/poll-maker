@@ -8,8 +8,19 @@ import { Poll } from '../models';
 
 import getIp from '../utils/getIp';
 import useMobile from "../utils/isMobile";
-import { Container } from "react-bootstrap";
+import Container from "react-bootstrap/Container";
 import Preloader from "../components/Preloader";
+
+const genCode = async (length = 2) => {
+    const result           = [];
+    const characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    const charactersLength = characters.length;
+    for ( let i = 0; i < length; i++ ) {
+        result.push(characters.charAt(Math.floor(Math.random() * charactersLength)));
+    }
+    const timeNow = new Date().getTime().toString().slice(-8);
+    return result.join('') + timeNow;
+}
 
 const AddSurvey = ({cancel, children, user}) => {
     const [loading, setLoading] = useState(true);
@@ -32,9 +43,12 @@ const AddSurvey = ({cancel, children, user}) => {
 
     const submitForm = (newView, data) => {
         setView(newView);
-
-
+        
+        
+        console.log(data);
+        
         if (newView === 'preview') {
+            setLoading(true);
             savePoll({...pollData, ...data});
         }
         setPollData({...pollData, ...data});
@@ -43,9 +57,11 @@ const AddSurvey = ({cancel, children, user}) => {
     const savePoll = async (data) => {
         const options = [...data.options];
         // eslint-disable-next-line no-sequences
-        data.options = JSON.stringify(JSON.stringify(options.reduce((o,curr)=> (o[curr]='', o),{})));
-
+        data.options = JSON.stringify(JSON.stringify(options.reduce((o,curr)=> (o[curr]=0, o),{})));
+        console.log(loading)
+        
         if (savedPoll) {
+            console.log('saved poll', savedPoll)
             const updated =await DataStore.save(
                 Poll.copyOf(savedPoll, updated => {
                     updated = data
@@ -55,27 +71,20 @@ const AddSurvey = ({cancel, children, user}) => {
             return;
         }
 
-        const genCode = async (length = 2) => {
-            const result           = [];
-            const characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-            const charactersLength = characters.length;
-            for ( let i = 0; i < length; i++ ) {
-                result.push(characters.charAt(Math.floor(Math.random() * charactersLength)));
-            }
-            const timeNow = new Date().getTime().toString().slice(-8);
-            return result.join('') + timeNow;
-        }
 
-        data.editCode = await genCode();
+
+        data.edit_code = await genCode();
         data.active = true;
 
+        console.log('save data', data);
         const saveData =  await DataStore.save(
             new Poll(data)
         );
-
+        
+        console.log('datastore saved', saveData);
         const shareId = saveData.id.slice(0,8);
         setSaved({...saveData, shareId: shareId})
-
+        setLoading(false);
     }
 
 
@@ -89,15 +98,15 @@ const AddSurvey = ({cancel, children, user}) => {
             }}>
             <Container fluid="md">
 
-                <div className={"px-3 pt-5 pb-2 w-80 w-md-100 " + displayStyles} style={{transition: 'opacity 0.6s 0.6s'}}>
+                <div className={"position-relative px-3 pt-5 pb-2 pb-md-5 w-80 w-md-50 mx-auto " + displayStyles} style={{transition: 'opacity 0.6s 0.6s'}}>
                     {view === 'init' && <InitForm cancel={cancel} submitForm={submitForm} data={{title: pollData.title, options: pollData.options}}/>}
                     {view === 'settings' && <Settings onBack={onBack} submit={submitForm} data={{dates: pollData.dates, custom: pollData.custom}}/> }
                     {view === 'dates' && <DatePicker onBack={onBack} submit={submitForm} data={pollData.dates}/> }
-                    {view === 'preview' && <Share onBack={onBack} data={savedPoll}/>}
+                    {view === 'preview' && !loading && <Share onBack={onBack} data={savedPoll}/>}
                 </div>
             </Container>
             </div>
-            {!isMobile && <Preloader loading={loading}/>}
+            {(!isMobile || (view === 'preview' && loading)) && <Preloader loading={loading}/>}
         </div>
     )
 }

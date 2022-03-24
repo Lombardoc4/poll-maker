@@ -6,10 +6,9 @@ const Results = ({data}) => {
     const totalVotes =  Object.values(data.options).reduce((sum, v) => sum + parseInt(v), 0);
 
 
-
     return (<div className="py-5 d-flex align-items-center flex-wrap">
-        <h1 className="display-3">Standing Results</h1>
-        <h2>{data.title}</h2>
+        <h1 className="h2 w-100">Standing Results</h1>
+        <h2 className="display-3">{data.title}</h2>
         {optionArrays.map(([option, value], i) => {
             const percentage = Math.floor(value/totalVotes * 100)
             return (

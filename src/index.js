@@ -12,11 +12,17 @@ import {
 
 import reportWebVitals from './reportWebVitals';
 
-import Amplify from "aws-amplify";
+import Amplify, { AuthModeStrategyType } from "aws-amplify";
 import awsExports from "./aws-exports";
 import Dashboard from './Dashboard';
 import EditPoll from './EditPoll';
-Amplify.configure(awsExports);
+import CustomNav from './Nav/CustomNav';
+import DashboardNav from './Nav/DashboardNav';
+import AccountAccess from './AccountAccess';
+Amplify.configure({...awsExports, DataStore: {
+  authModeStrategyType: AuthModeStrategyType.MULTI_AUTH
+}});
+
 
 
 ReactDOM.render(
@@ -24,10 +30,14 @@ ReactDOM.render(
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Landing/> } />
-          <Route path="/dashboard/edit/:pollId" element={<EditPoll/> } />
-          <Route path="/dashboard/*" element={<Dashboard/> } />
-          <Route path="/preview/:pollId" element={<PollMain/> } />
-          <Route path="/poll/:pollId" element={<PollMain/> } />
+          <Route path="login" element={<AccountAccess/> } />
+          <Route path="dashboard" element={<Dashboard/> } >
+            <Route path="edit/:pollId" element={<EditPoll home='/dashboard'><DashboardNav/></EditPoll> } />
+            <Route path="*" element={<Dashboard/> } />
+          </Route>
+          <Route path="edit/:pollId" element={<EditPoll home='/'><CustomNav/></EditPoll> } />
+          <Route path="preview/:pollId" element={<PollMain preview={true}/> } />
+          <Route path="poll/:pollId" element={<PollMain/> } />
         </Routes>
       </BrowserRouter>
   </React.StrictMode>,

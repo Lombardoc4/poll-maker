@@ -7,10 +7,10 @@ import Button from "react-bootstrap/Button";
 import { DataStore } from '@aws-amplify/datastore';
 import { Poll } from '../models';
 import Results from "./Results";
+import { Container } from "react-bootstrap";
 
 
-
-const PollMain = () => {
+const PollMain = ({preview}) => {
     const [loading, toggleLoading] = useState(true);
     const [data, setData] = useState({});
     const [results, toggleResults] = useState(false)
@@ -37,23 +37,37 @@ const PollMain = () => {
     }, [])
 
     const handleSubmit = async (selected) => {
+        const options = {...data.options};
+        options[selected] = parseInt(options[selected] + 1);
+        
+        console.log(options)
+        // const options = {...data.options, data.options[selected]: parseInt(data.options[selected] + 1)}
+        if (!preview){
+            
+            const vote = await DataStore.save(
+                Poll.copyOf(data, updated => {
+                    updated.options = options;
+                })
+            );
+            console.log('vote', vote)
+            setData(vote)
+        } else {
+            setData({...data, options: options});
+        }
 
-        const vote = await DataStore.save(
-            Poll.copyOf(data, updated => {
-                updated.options[selected] = parseInt(data.options[selected]) + 1;
-            })
-        );
-
-        toggleSubmited(true)
+        toggleSubmited(selected)
         toggleResults(true)
 
-        console.log('vote', vote)
     }
 
 
     return (<>
-        <div className="position-relative w-80 w-sm-50 pt-3 ps-4" style={{minHeight: window.innerHeight}}>
-
+        <div className="position-relative w-80 w-md-100" style={{minHeight: window.innerHeight}}>
+            <CustomNav color="primary"/>
+            
+            <Container fluid="md" className="w-md-50">
+                
+                
             {results && <Results data={data}/>}
             { (data.id && !results) &&
             <Question data={data} scrollToEl={scrollBottomEl} submit={handleSubmit}>
@@ -69,41 +83,41 @@ const PollMain = () => {
             {/* {data.id &&
             <>
             <div className="ps-3 d-flex align-items-center flex-wrap">
-                {!results && <>
+            {!results && <>
                 <h1 className="display-3 py-5 w-100">{data.title}</h1>
                 {optionsViewed !== 'hide' && <div onClick={() => {hideHint()}} className={"d-flex flex-column justify-content-center w-100 text-center overflow-hidden " + (optionsViewed === 'animate' ? 'opacity-0' : 'opacity-100')}
                 style={{transition: 'opacity 0.6s, height 0.6s', height: (optionsViewed === 'animate' ? '0' : '150px')}}>
-                    <h2 className="fs-5 mb-0">Options</h2>
-                    <p className="bounce-2">
-                        <i className="fs-5 fw-bold bi bi-chevron-down"></i>
-                    </p>
+                <h2 className="fs-5 mb-0">Options</h2>
+                <p className="bounce-2">
+                <i className="fs-5 fw-bold bi bi-chevron-down"></i>
+                </p>
                 </div>}
                 <Button
-                    type="submit"
-                    variant='secondary'
-                    disabled={!submitted}
-                    className={"mb-2 fs-4 bg-gradient w-100 text-uppercase " + (!submitted ? 'd-none': '')}>
-                    Results
+                type="submit"
+                variant='secondary'
+                disabled={!submitted}
+                className={"mb-2 fs-4 bg-gradient w-100 text-uppercase " + (!submitted ? 'd-none': '')}>
+                Results
                 </Button>
                 <form onSubmit={handleSubmit} className='w-100'>
-
-                    <Button
-                    type="submit"
-                    variant={selected ? 'success' : 'secondary'}
-                    disabled={!selected}
-                    className="fs-4 bg-gradient w-100 text-uppercase">
-                    Submit
-                    </Button>
+                
+                <Button
+                type="submit"
+                variant={selected ? 'success' : 'secondary'}
+                disabled={!selected}
+                className="fs-4 bg-gradient w-100 text-uppercase">
+                Submit
+                </Button>
                 </form>
                 </>}
-            </div>
-            {!results && <>
-                <UserPoll poll={data} selectState={[selected, setSelected]}/>
-             </>}
-            </>} */}
+                </div>
+                {!results && <>
+                    <UserPoll poll={data} selectState={[selected, setSelected]}/>
+                    </>}
+                </>} */}
             {data.err && <h1>Poll Does not Exist</h1>}
 
-            <CustomNav color="primary"/>
+                </Container>
 
         </div>
 

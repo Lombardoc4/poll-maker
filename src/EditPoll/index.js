@@ -4,12 +4,14 @@ import DatePicker from "../AddPoll/DatePicker";
 import InitForm from "../AddPoll/InitForm";
 import Settings from "../AddPoll/Settings";
 import Share from "../AddPoll/Share";
+import Container from "react-bootstrap/Container";
+import Preloader from "../components/Preloader";
 
 import { DataStore } from '@aws-amplify/datastore';
 import { Poll } from '../models';
-import DashboardNav from "../Nav/DashboardNav";
+import useMobile from "../utils/isMobile";
 
-const EditPoll = () => {
+const EditPoll = ({children, home='/'}) => {
     const [loading, setLoading] = useState(true);
     const [savedPoll, setSaved] = useState(false);
     const [view, setView] = useState('init');
@@ -18,11 +20,12 @@ const EditPoll = () => {
 
     const { pollId } = useParams();
     const navigator = useNavigate();
-
+    const isMobile = useMobile();
+    
     useEffect(() => {
         // Todo confirm it belongs to user with auth
         const getPoll = async () => {
-            const models = await DataStore.query(Poll, p => p.id("beginsWith", pollId));
+            const models = await DataStore.query(Poll, p => p.edit_code("eq", pollId));
             return models;
         }
 
@@ -46,6 +49,14 @@ const EditPoll = () => {
     const submitForm = (newView, data) => {
         setView(newView);
 
+        // 
+        if (data.options) {
+            const newOptions = {};
+            const currValues = Object.values(pollData.options)
+            data.options.map((o, i) => newOptions[o] = currValues[i] || 0); 
+            data.options = newOptions;  
+        }
+        
 
         if (newView === 'preview') {
             savePoll({...pollData, ...data});
@@ -54,41 +65,50 @@ const EditPoll = () => {
     }
 
     const savePoll = async (data) => {
+        console.log(data);
 
         // Todo set alert for user to confirm update
-
-        const options = [...data.options];
-        // eslint-disable-next-line no-sequences
-        data.options = JSON.stringify(JSON.stringify(options.reduce((o,curr)=> (o[curr]='', o),{})));
-
+        
         const updated =await DataStore.save(
             Poll.copyOf(savedPoll, updated => {
-                updated = data
+                updated.title = data.title;
+                updated.options = data.options;
+                updated.active = data.active;
+                updated.edit_code= data.edit_code;
+                updated.hide_results= data.hide_results;
+                updated.start_date= data.start_date;
+                updated.end_date= data.end_date;
+                updated.custom= data.custom;
             })
         )
 
+        console.log(updated);
         setSaved({...updated, shareId: updated.id.slice(0,8)});
         return;
     }
 
-    console.log(pollData)
+    console.log('pollDate', pollData.title)
 
     return (
-        <div className='d-flex position-relative bg-gradient bg-primary'>
+        <div className='position-relative bg-gradient bg-primary'>
+            {children}
             <div className={'d-flex align-items-center pb-5 ' + bgStyles}
             style={{
-                minHeight: window.innerHeight,
+                minHeight: isMobile ? window.innerHeight : 'auto',
                 transition: 'background-color 0.6s, width 0.6s'
             }}>
-                <div className={"px-3 pt-5 pb-2 w-80 " + displayStyles} style={{transition: 'opacity 0.6s 0.6s'}}>
-                    {view === 'init' && <InitForm cancel={() => navigator('/dashboard')} submitForm={submitForm} data={{title: pollData.title, options: pollData.options}}/>}
+            <Container fluid="md">
+            {pollData.id &&
+                <div className={"position-relative px-3 pt-5 pb-2 pb-md-5 w-80 w-md-50 mx-auto " + displayStyles} style={{transition: 'opacity 0.6s 0.6s'}}>
+                    {view === 'init' && <InitForm cancel={() => navigator(home)} submitForm={submitForm} data={{title: pollData.title, options: pollData.options}}/>}
                     {view === 'settings' && <Settings onBack={onBack} submit={submitForm} data={{dates: pollData.dates, custom: pollData.custom}}/> }
                     {view === 'dates' && <DatePicker onBack={onBack} submit={submitForm} data={pollData.dates}/> }
                     {view === 'preview' && <Share onBack={onBack} data={savedPoll}/>}
                 </div>
+            }
+            </Container>
             </div>
-
-            <DashboardNav/>
+            {!isMobile && <Preloader loading={loading}/>}
         </div>
     )
 }

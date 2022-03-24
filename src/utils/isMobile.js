@@ -6,7 +6,7 @@ const useMobile = () => {
 
 
     const resizeHandler = () => {
-        console.log(isMobile)
+        // console.log(isMobile)
         if(window.innerWidth < 576){
             setState(true);
         }
