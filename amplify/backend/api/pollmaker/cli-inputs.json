@@ -3,11 +3,10 @@
   "serviceConfiguration": {
     "apiName": "pollmaker",
     "serviceName": "AppSync",
-    "gqlSchemaPath": "/tmp/amplify-b05b8303-225b-4a32-8cc8-f3994b140405/amplify/backend/api/pollmaker/schema.graphql",
+    "gqlSchemaPath": "/Users/cris/Documents/Repos/Lom-Sites/poll-maker/amplify/backend/api/pollmaker/schema.graphql",
     "defaultAuthType": {
       "mode": "API_KEY",
-      "keyDescription": "api key description",
-      "expirationTime": 30
+      "expirationTime": 7
     },
     "conflictResolution": {
       "defaultResolutionStrategy": {
@@ -16,11 +15,8 @@
     },
     "additionalAuthTypes": [
       {
-        "mode": "AWS_IAM"
-      },
-      {
         "mode": "AMAZON_COGNITO_USER_POOLS",
-        "cognitoUserPoolId": "authauthpollmaker"
+        "cognitoUserPoolId": "authpollmakereafb69ae"
       }
     ]
   }

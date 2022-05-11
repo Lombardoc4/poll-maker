@@ -8,11 +8,12 @@ import CustomNav from '../Nav/CustomNav';
 function Landing() {
     const [addSurvey, toggleAdd] = useState(false);
 
-    const fullHeightEl = useRef(null);
+    const fullHeightEl = useRef('test');
+    
     useEffect(() => {
-        window.onresize = () => {
+        window.addEventListener('resize', () => {
             fullHeightEl.current.style.height = window.innerHeight+'px';
-        }
+        });
     }, [])
 
     if (addSurvey) {
@@ -22,12 +23,12 @@ function Landing() {
             </AddSurvey>
         )
     }
-
+    
     return (
         <>
             <div
-            className='position-relative bg-primary bg-gradient'
             ref={fullHeightEl}
+            className='position-relative bg-primary bg-gradient'
             style={{
                 height: window.innerHeight,
             }}>

@@ -9,10 +9,10 @@ export const onCreatePoll = /* GraphQL */ `
       options
       active
       edit_code
-      custom
       hide_results
       start_date
       end_date
+      custom
       createdAt
       updatedAt
       _version
@@ -30,10 +30,10 @@ export const onUpdatePoll = /* GraphQL */ `
       options
       active
       edit_code
-      custom
       hide_results
       start_date
       end_date
+      custom
       createdAt
       updatedAt
       _version
@@ -51,10 +51,10 @@ export const onDeletePoll = /* GraphQL */ `
       options
       active
       edit_code
-      custom
       hide_results
       start_date
       end_date
+      custom
       createdAt
       updatedAt
       _version

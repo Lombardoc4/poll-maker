@@ -6,7 +6,7 @@ const useOnScreen = (element) => {
 
 
     const scrollHandler = () => {
-        console.log(isVisible)
+        // console.log(isVisible)
         if(window.pageYOffset + window.innerHeight >= element.current.offsetTop){
             setState(true);
         }
