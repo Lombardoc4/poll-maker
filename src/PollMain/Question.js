@@ -12,7 +12,7 @@ const Question = ({data, scrollToEl, submit, children}) => {
     const isMobile = useMobile();
     const isVisible = useOnScreen(scrollToEl);
 
-    console.log('data', data);
+    // console.log('data', data);
     
     useEffect(() => {
         if (isVisible && optionsViewed === 'init' && isMobile) {

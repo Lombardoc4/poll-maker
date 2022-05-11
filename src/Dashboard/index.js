@@ -147,7 +147,7 @@ const Dashboard = () => {
     // Todo Check User is Logged in
 
     // Todo Fetch User Polls
-    console.log('render');
+    // console.log('render');
     
     if (view === 'add') {
         return (

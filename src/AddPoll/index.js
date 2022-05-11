@@ -45,7 +45,7 @@ const AddSurvey = ({cancel, children, user}) => {
         setView(newView);
         
         
-        console.log(data);
+        // console.log(data);
         
         if (newView === 'preview') {
             setLoading(true);
@@ -58,10 +58,10 @@ const AddSurvey = ({cancel, children, user}) => {
         const options = [...data.options];
         // eslint-disable-next-line no-sequences
         data.options = JSON.stringify(JSON.stringify(options.reduce((o,curr)=> (o[curr]=0, o),{})));
-        console.log(loading)
+        // console.log(loading)
         
         if (savedPoll) {
-            console.log('saved poll', savedPoll)
+            // console.log('saved poll', savedPoll)
             const updated =await DataStore.save(
                 Poll.copyOf(savedPoll, updated => {
                     updated = data
@@ -76,12 +76,12 @@ const AddSurvey = ({cancel, children, user}) => {
         data.edit_code = await genCode();
         data.active = true;
 
-        console.log('save data', data);
+        // console.log('save data', data);
         const saveData =  await DataStore.save(
             new Poll(data)
         );
         
-        console.log('datastore saved', saveData);
+        // console.log('datastore saved', saveData);
         const shareId = saveData.id.slice(0,8);
         setSaved({...saveData, shareId: shareId})
         setLoading(false);

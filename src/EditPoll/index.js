@@ -65,7 +65,7 @@ const EditPoll = ({children, home='/'}) => {
     }
 
     const savePoll = async (data) => {
-        console.log(data);
+        // console.log(data);
 
         // Todo set alert for user to confirm update
         
@@ -82,12 +82,12 @@ const EditPoll = ({children, home='/'}) => {
             })
         )
 
-        console.log(updated);
+        // console.log(updated);
         setSaved({...updated, shareId: updated.id.slice(0,8)});
         return;
     }
 
-    console.log('pollDate', pollData.title)
+    // console.log('pollDate', pollData.title)
 
     return (
         <div className='position-relative bg-gradient bg-primary'>

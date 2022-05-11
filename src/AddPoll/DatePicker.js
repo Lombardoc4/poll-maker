@@ -11,7 +11,7 @@ const initialState = {
 }
 
 const DatePicker = ({onBack, submit, data}) => {
-    console.log(data)
+    // console.log(data)
     const [dates, setDates] = useState(data || {initialState})
     const { from, to } = dates;
     const modifiers = { start: from, end: to };

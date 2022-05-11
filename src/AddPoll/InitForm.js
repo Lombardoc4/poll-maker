@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"
 import Button from "react-bootstrap/Button";
 
 const InitForm = ({cancel, submitForm, data}) => {
-    console.log('data', data);
+    // console.log('data', data);
     // Todo useRef instead or rerending on every type
     const [title, modTitle] = useState('');
     const [options, modOptions] = useState(['', '']);
@@ -29,7 +29,7 @@ const InitForm = ({cancel, submitForm, data}) => {
         const Label = (
             <div className="d-flex">
                 <label className="fs-5 mb-0" htmlFor={"Option" + index}>{title}</label>
-                {index >= 2 && <i onClick={() => {console.log(options[index]); options.splice(index, 1); console.log('new', options); modOptions([...options])}} className="ms-auto bi bi-x-circle-fill"></i>}
+                {index >= 2 && <i onClick={() => {options.splice(index, 1); modOptions([...options])}} className="ms-auto bi bi-x-circle-fill"></i>}
             </div>
         );
 

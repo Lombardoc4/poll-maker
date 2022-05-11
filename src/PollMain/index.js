@@ -40,7 +40,7 @@ const PollMain = ({preview}) => {
         const options = {...data.options};
         options[selected] = parseInt(options[selected] + 1);
         
-        console.log(options)
+        // console.log(options)
         // const options = {...data.options, data.options[selected]: parseInt(data.options[selected] + 1)}
         if (!preview){
             
@@ -49,7 +49,7 @@ const PollMain = ({preview}) => {
                     updated.options = options;
                 })
             );
-            console.log('vote', vote)
+            // console.log('vote', vote)
             setData(vote)
         } else {
             setData({...data, options: options});
