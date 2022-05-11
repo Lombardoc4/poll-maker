@@ -50,6 +50,8 @@ input, textarea{
 
 
 
+
+
 @import './colors.scss';
 
 
@@ -60,6 +62,9 @@ nav{
   transition: width 1s;
 }
 
+hr{
+  margin: 0.75rem 0;
+}
 
 #basic-navbar-nav{
 

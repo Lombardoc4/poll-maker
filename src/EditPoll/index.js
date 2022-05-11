@@ -98,14 +98,14 @@ const EditPoll = ({children, home='/'}) => {
                 transition: 'background-color 0.6s, width 0.6s'
             }}>
             <Container fluid="md">
-            {pollData.id &&
-                <div className={"position-relative px-3 pt-5 pb-2 pb-md-5 w-80 w-md-50 mx-auto " + displayStyles} style={{transition: 'opacity 0.6s 0.6s'}}>
-                    {view === 'init' && <InitForm cancel={() => navigator(home)} submitForm={submitForm} data={{title: pollData.title, options: pollData.options}}/>}
-                    {view === 'settings' && <Settings onBack={onBack} submit={submitForm} data={{dates: pollData.dates, custom: pollData.custom}}/> }
-                    {view === 'dates' && <DatePicker onBack={onBack} submit={submitForm} data={pollData.dates}/> }
-                    {view === 'preview' && <Share onBack={onBack} data={savedPoll}/>}
-                </div>
-            }
+                {pollData.id &&
+                    <div className={"px-3 pt-5 pb-2 pb-md-5 w-80 w-md-50 mr-auto mx-md-auto " + displayStyles} style={{transition: 'opacity 0.6s 0.6s'}}>
+                        {view === 'init' && <InitForm cancel={() => navigator(home)} submitForm={submitForm} data={{title: pollData.title, options: pollData.options}}/>}
+                        {view === 'settings' && <Settings onBack={onBack} submit={submitForm} data={{dates: pollData.dates, custom: pollData.custom}}/> }
+                        {view === 'dates' && <DatePicker onBack={onBack} submit={submitForm} data={pollData.dates}/> }
+                        {view === 'preview' && <Share onBack={onBack} data={savedPoll}/>}
+                    </div>
+                }
             </Container>
             </div>
             {!isMobile && <Preloader loading={loading}/>}

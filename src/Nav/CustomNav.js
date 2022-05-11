@@ -14,7 +14,7 @@ const CustomNav = ({ color = 'white'}) => {
   const [loading, setLoading] = useState(false);
   const navigator = useNavigate();
 
-  const createVariant = color === 'primary' ? 'light' : 'primary';
+  const createVariant = color === 'white' ? 'white' : 'primary';
   const searchVariant =  color !== 'white' ? 'primary' : 'white';
   const textColor = color !== 'white' ? 'text-white' : ''
 

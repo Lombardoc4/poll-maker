@@ -71,8 +71,6 @@ const AddSurvey = ({cancel, children, user}) => {
             return;
         }
 
-
-
         data.edit_code = await genCode();
         data.active = true;
 
@@ -98,7 +96,7 @@ const AddSurvey = ({cancel, children, user}) => {
             }}>
             <Container fluid="md">
 
-                <div className={"position-relative px-3 pt-5 pb-2 pb-md-5 w-80 w-md-50 mx-auto " + displayStyles} style={{transition: 'opacity 0.6s 0.6s'}}>
+                <div className={"px-3 pt-5 pb-2 pb-md-5 w-80 w-md-50 mx-md-auto mb-3 " + displayStyles} style={{transition: 'opacity 0.6s 0.6s'}}>
                     {view === 'init' && <InitForm cancel={cancel} submitForm={submitForm} data={{title: pollData.title, options: pollData.options}}/>}
                     {view === 'settings' && <Settings onBack={onBack} submit={submitForm} data={{dates: pollData.dates, custom: pollData.custom}}/> }
                     {view === 'dates' && <DatePicker onBack={onBack} submit={submitForm} data={pollData.dates}/> }

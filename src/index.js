@@ -35,7 +35,7 @@ ReactDOM.render(
             <Route path="edit/:pollId" element={<EditPoll home='/dashboard'><DashboardNav/></EditPoll> } />
             <Route path="*" element={<Dashboard/> } />
           </Route>
-          <Route path="edit/:pollId" element={<EditPoll home='/'><CustomNav/></EditPoll> } />
+          <Route path="edit/:pollId" element={<EditPoll home='/'><CustomNav color="primary"/></EditPoll> } />
           <Route path="preview/:pollId" element={<PollMain preview={true}/> } />
           <Route path="poll/:pollId" element={<PollMain/> } />
         </Routes>
