@@ -66,10 +66,10 @@ const CustomNav = ({ color = 'white'}) => {
             Poll <br className="d-md-none"/>Maker
           </Link>
         </h1>
-        <div className='order-md-3 my-auto d-flex flex-column flex-md-row col-12 col-md-3'>
+        {/* <div className='order-md-3 my-auto d-flex flex-column flex-md-row col-12 col-md-3'>
             <Button className="m-2 shadow" variant="success">Log&nbsp;In</Button>
             <Button className="m-2 shadow" variant={createVariant}>Create Account</Button>
-        </div>
+        </div> */}
         <div className="order-md-2 ms-md-auto me-md-2">
 
           <p className='fs-5 mb-1 mb-md-0'>Edit Existing Poll</p>

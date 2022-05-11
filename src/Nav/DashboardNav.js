@@ -15,9 +15,9 @@ const DashboardNav = () => {
                         Poll <br className="d-md-none"/>Maker
                     </Link>
                 </h1>
-                <div className='ms-md-auto my-auto d-flex flex-column'>
+                {/* <div className='ms-md-auto my-auto d-flex flex-column'>
                     <Button className="m-2 shadow" variant="light">Log&nbsp;Out</Button>
-                </div>
+                </div> */}
             </Nav>
         </NavLayout>
     )
